@@ -30,12 +30,15 @@ const withAuthentication = (Component) => {
 
     render() {
       const { authUser } = this.state;
-      return (
-        <AuthUserContext.Provider value={authUser}>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          <Component {...this.props} />
-        </AuthUserContext.Provider>
-      );
+      if (authUser) {
+        return (
+          <AuthUserContext.Provider value={authUser}>
+            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+            <Component authUser={authUser} {...this.props} />
+          </AuthUserContext.Provider>
+        );
+      }
+      return null;
     }
   }
 

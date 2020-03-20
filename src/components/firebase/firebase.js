@@ -30,11 +30,16 @@ class Firebase {
   // *** Merge Auth and DB User API *** //
   onAuthUserListener(next, fallback) {
     return this.auth.onAuthStateChanged((authUser) => {
-      console.log({ authUser });
+      const localUser = localStorage.getItem('user');
       if (authUser) {
-        next(authUser)
+        const mergedUser = {
+          uid: authUser.uid,
+          anonymous: authUser,
+          username: localUser,
+        }
+        next(mergedUser);
       } else {
-        fallback()
+        fallback();
       }
     });
   }
