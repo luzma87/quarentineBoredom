@@ -31,11 +31,13 @@ class Firebase {
   onAuthUserListener(next, fallback) {
     return this.auth.onAuthStateChanged((authUser) => {
       const localUser = localStorage.getItem('user');
+      const localGameSession = localStorage.getItem('gameSession');
       if (authUser) {
         const mergedUser = {
           uid: authUser.uid,
           anonymous: authUser,
           username: localUser,
+          gameSession: localGameSession,
         }
         next(mergedUser);
       } else {
@@ -46,11 +48,11 @@ class Firebase {
 
   // *** user ***
   game(uid) {
-    return this.db.collection('games').doc(uid);
+    return this.db.collection('gameSessions').doc(uid);
   }
 
   games() {
-    return this.db.collection('games');
+    return this.db.collection('gameSessions');
   }
 }
 

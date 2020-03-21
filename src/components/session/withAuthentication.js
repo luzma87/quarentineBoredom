@@ -28,13 +28,22 @@ const withAuthentication = (Component) => {
       this.listener();
     }
 
+    updateAuthUser(newAuthUser) {
+      const { authUser } = this.state;
+      const mergedUser = { ...authUser, ...newAuthUser };
+      this.setState({ authUser: mergedUser });
+    }
+
     render() {
       const { authUser } = this.state;
       if (authUser) {
         return (
           <AuthUserContext.Provider value={authUser}>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <Component authUser={authUser} {...this.props} />
+            <Component
+              authUser={authUser}
+              updateAuthUser={(newAuthUser) => this.updateAuthUser(newAuthUser)}
+              {...this.props} />
           </AuthUserContext.Provider>
         );
       }

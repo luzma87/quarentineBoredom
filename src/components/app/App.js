@@ -1,18 +1,17 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faPenFancy as fadPenFancy
-} from '@fortawesome/pro-duotone-svg-icons';
-import { faPenFancy } from '@fortawesome/pro-regular-svg-icons';
+import { faPenFancy as fadPenFancy } from '@fortawesome/pro-duotone-svg-icons';
+import { faPenFancy, faSave } from '@fortawesome/pro-regular-svg-icons';
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import routes from '../../constants/routes';
 import FirebaseContext from '../firebase/context';
 import Firebase from '../firebase/firebase';
 import HomePage from '../home/HomePage';
-import routes from '../../constants/routes';
 
 library.add(
   faPenFancy,
-  fadPenFancy
+  fadPenFancy,
+  faSave,
 );
 
 function App() {
