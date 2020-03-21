@@ -12,6 +12,7 @@ import Firebase from '../firebase/firebase';
 import GameSessionPage from '../gameSession/GameSessionPage';
 import HomePage from '../home/HomePage';
 import GamePage from '../game/GamePage';
+import ScorePage from '../score/ScorePage';
 
 library.add(
   faPenFancy,
@@ -29,6 +30,7 @@ const App = () => {
 
         <Route exact path={routes.GAME()} component={GamePage} />
         <Route exact path={routes.GAME_SESSION()} component={GameSessionPage} />
+        <Route exact path={routes.SCORE()} component={ScorePage} />
       </BrowserRouter>
     </FirebaseContext.Provider>
   );

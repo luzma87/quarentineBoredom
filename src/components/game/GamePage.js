@@ -37,6 +37,8 @@ const GamePage = ({ firebase, authUser }) => {
     const totalPlayers = playersArray.length;
     const firstReady = game.firstReady;
 
+    if (readyPlayers === totalPlayers) return <Redirect to={routes.SCORE(gameSession.id, game.id)} />;
+
     const onChangeValue = (ev) => {
         const myNewCols = { ...myStuff.columns };
         myNewCols[ev.target.id].value = ev.target.value;
