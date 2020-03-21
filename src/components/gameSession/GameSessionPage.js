@@ -1,3 +1,4 @@
+import { hri } from 'big-human-readable-ids';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -11,10 +12,11 @@ import CustomSpinner from '../_common/CustomSpinner';
 import ColumnsList from './ColumnsList';
 import LettersList from './LettersList';
 import PlayersList from './PlayersList';
+import propTypes from '../../constants/propTypes';
 
-const addPlayerToGameSession = (firebase, gameSession, username) => {
+const addPlayerToGameSession = (firebase, gameSession, username, id) => {
     const currentPlayers = gameSession.players || [];
-    const mergedPlayers = [...currentPlayers, username];
+    const mergedPlayers = [...currentPlayers, { username, id }];
     const mergedGameSession = { ...gameSession, players: mergedPlayers };
     if (currentPlayers.length === 0) {
         mergedGameSession.host = username;
@@ -24,7 +26,7 @@ const addPlayerToGameSession = (firebase, gameSession, username) => {
 
 const removePlayer = (firebase, gameSession, username) => {
     const currentPlayers = gameSession.players || [];
-    const newPlayers = currentPlayers.filter(p => p !== username);
+    const newPlayers = currentPlayers.filter(p => p.username !== username);
     const mergedGameSession = { ...gameSession, players: newPlayers };
     firebase.gameSession(gameSession.id).set(mergedGameSession);
 }
@@ -50,7 +52,7 @@ const saveLetter = (firebase, gameSession, letter) => {
     firebase.gameSession(gameSession.id).set(mergedGameSession);
 }
 
-const GameSessionPage = ({ firebase, authUser }) => {
+const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
     const [shouldRedirect, setRedirect] = useState(false);
 
     const { isLoading, gameSession } = gameSessionsHooks.useGameSession(firebase, authUser.gameSession);
@@ -61,25 +63,25 @@ const GameSessionPage = ({ firebase, authUser }) => {
         }
     }, [authUser]);
 
-    if (shouldRedirect) return <Redirect to={routes.HOME} />
+    if (shouldRedirect) return <Redirect to={routes.HOME} />;
 
-    if (!gameSession) {
-        return (
-            <div>
-                Game session
-                <CustomSpinner shown={isLoading} />
-            </div>)
+    if (!gameSession) return <CustomSpinner shown={isLoading} />;
+
+    if (gameSession.currentGame.started) {
+        const gameId = gameSession.currentGame.id;
+        return <Redirect to={routes.GAME(gameSession.id, gameId)} />;
     }
 
     const players = gameSession.players || [];
     const columns = gameSession.columns || [];
     const letters = gameSession.letters || [];
     const username = authUser.username;
+    const userId = authUser.uid;
 
-    const isPlayerInGameSession = players.includes(username);
+    const isPlayerInGameSession = players.filter(p => p.username === username).length > 0;
 
     if (!isPlayerInGameSession) {
-        addPlayerToGameSession(firebase, gameSession, username);
+        addPlayerToGameSession(firebase, gameSession, username, userId);
     }
 
     const isHost = gameSession.host === username;
@@ -87,10 +89,47 @@ const GameSessionPage = ({ firebase, authUser }) => {
     const onSaveLetter = (letter) => {
         saveLetter(firebase, gameSession, letter)
     }
+    const onStartGame = () => {
+        const gameId = hri.random();
+        let letter = gameSession.currentLetter;
+        const gameHistory = gameSession.gameHistory || [];
+        let mergedGameSession = { ...gameSession, gameHistory };
+        if (!letter) {
+            const charset = 'abcdefghijklmnopqrstuvwxyz';
+            letter = charset[Math.floor(Math.random() * charset.length)];
+
+            const currentLetters = gameSession.letters || [];
+            const newLetters = [...currentLetters, letter];
+            mergedGameSession = { ...mergedGameSession, letters: newLetters, currentLetter: letter };
+
+        }
+        const gamePlayers = players.reduce((acc, player) => {
+            const accumulated = { ...acc };
+            const columnsForPlayer = columns.reduce((acc, column) => {
+                const accumulated = { ...acc };
+                accumulated[column] = { value: "", score: 0 };
+                return accumulated;
+            }, {});
+            accumulated[player.id] = { ...player, ready: false, columns: columnsForPlayer };
+            return accumulated;
+        }, {});
+        const game = {
+            id: gameId,
+            letter: letter,
+            players: gamePlayers,
+            columns,
+            started: true,
+        };
+        mergedGameSession.currentGame = game;
+        firebase.gameSession(gameSession.id).set(mergedGameSession);
+        localStorage.game = gameId;
+        updateAuthUser({ game: gameId });
+    }
 
     return (
         <div>
-            Loaded Game session
+            Hi {authUser.username}<br />
+            Game session by {gameSession.host}
             <PlayersList
                 players={players}
                 editable={isHost}
@@ -109,14 +148,15 @@ const GameSessionPage = ({ firebase, authUser }) => {
                 ? <CustomIconButton
                     icon={["fad", "alien-monster"]}
                     label="Start"
-                    onClick={() => { }} />
+                    onClick={() => onStartGame()} />
                 : null}
         </div>)
 };
 
 GameSessionPage.propTypes = {
-    authUser: PropTypes.shape({}),
-    firebase: PropTypes.any,
+    authUser: propTypes.authUser,
+    updateAuthUser: PropTypes.func,
+    firebase: propTypes.firebase,
 };
 
 export default compose(

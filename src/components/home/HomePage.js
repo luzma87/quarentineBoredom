@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { compose } from 'recompose';
+import propTypes from '../../constants/propTypes';
 import routes from '../../constants/routes';
 import withAuthentication from '../session/withAuthentication';
 import InputOrLabel from './InputOrLabel';
@@ -101,7 +102,7 @@ const HomePage = ({ authUser, updateAuthUser }) => {
 };
 
 HomePage.propTypes = {
-    authUser: PropTypes.shape({}),
+    authUser: propTypes.authUser,
     updateAuthUser: PropTypes.func,
 };
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const CustomInput = ({ id, value, onChange, label }) => (
+const CustomInput = ({ id, value, onChange, label, ...rest }) => (
     <input
         id={id}
         value={value}
@@ -9,6 +9,7 @@ const CustomInput = ({ id, value, onChange, label }) => (
         placeholder={label}
         onChange={ev => onChange(ev)}
         style={{ background: 'pink' }}
+        {...rest}
     />
 );
 
