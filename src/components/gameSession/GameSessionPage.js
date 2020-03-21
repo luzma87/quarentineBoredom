@@ -46,9 +46,7 @@ const addColumn = (firebase, gameSession, column) => {
 }
 
 const saveLetter = (firebase, gameSession, letter) => {
-    const currentLetters = gameSession.letters || [];
-    const newLetters = [...currentLetters, letter];
-    const mergedGameSession = { ...gameSession, letters: newLetters, currentLetter: letter };
+    const mergedGameSession = { ...gameSession, currentLetter: letter };
     firebase.gameSession(gameSession.id).set(mergedGameSession);
 }
 

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { compose } from 'recompose';
@@ -28,6 +29,7 @@ const ScorePage = ({ firebase, authUser }) => {
 
     if (shouldRedirect) return <Redirect to={routes.HOME} />;
     if (!gameSession || !currentGame) return <CustomSpinner shown={isLoading} />;
+    if (Object.keys(currentGame).length === 0) return <Redirect to={routes.HOME} />;
 
     const { players } = currentGame;
 
@@ -86,12 +88,15 @@ const ScorePage = ({ firebase, authUser }) => {
     }
 
     const onPlayAgain = () => {
-        console.log(gameSession);
         const newGameSession = { ...gameSession };
 
         newGameSession.gameHistory.push(currentGame);
+        newGameSession.currentGame = {};
+        newGameSession.letters.push(newGameSession.currentLetter);
+        newGameSession.currentLetter = "";
 
-        console.log(newGameSession);
+        localStorage.removeItem('game');
+        firebase.gameSession(gameSession.id).set(newGameSession);
     }
 
     return (
