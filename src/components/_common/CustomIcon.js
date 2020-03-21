@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from '../../constants/propTypes';
 
 const getIcon = (icon) => {
   if (Array.isArray(icon)) return icon;
@@ -17,10 +17,7 @@ const CustomIcon = ({
 };
 
 CustomIcon.propTypes = {
-  icon: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
-  ]).isRequired,
+  icon: propTypes.icon.isRequired,
 };
 
 export default CustomIcon;
