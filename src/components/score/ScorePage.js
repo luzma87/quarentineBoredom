@@ -85,6 +85,15 @@ const ScorePage = ({ firebase, authUser }) => {
         setCurrentGame(mergedCurrentGame);
     }
 
+    const onPlayAgain = () => {
+        console.log(gameSession);
+        const newGameSession = { ...gameSession };
+
+        newGameSession.gameHistory.push(currentGame);
+
+        console.log(newGameSession);
+    }
+
     return (
         <>
             <div>Score</div>
@@ -130,6 +139,9 @@ const ScorePage = ({ firebase, authUser }) => {
                     })}
                 </tbody>
             </table>
+            <button onClick={() => onPlayAgain()}>
+                Play again
+            </button>
         </>
     )
 }
