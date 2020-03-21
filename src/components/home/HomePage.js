@@ -1,53 +1,64 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { compose } from 'recompose';
+import withFirebase from '../firebase/withFirebase';
 import withAuthentication from '../session/withAuthentication';
 import CustomIcon from '../_common/CustomIcon';
+import routes from '../../constants/routes';
 
 // sedative-dualist-ware-lonesomely-6035
 
-const HomePage = ({ authUser, updateAuthUser }) => {
+const HomePage = ({ firebase, authUser, updateAuthUser }) => {
     console.log("HOME", authUser);
 
-    const [username, setUsername] = useState("");
-    const [gameSession, setGameSession] = useState("");
+    const [localUsername, setLocalUsername] = useState("");
+    const [localGameSession, setLocalGameSession] = useState("");
     const [modifyingUser, setModifyingUser] = useState(false);
     const [modifyingSession, setModifyingSession] = useState(false);
+    const [shouldRedirect, setRedirect] = useState(false);
 
     useEffect(() => {
+        let setValues = 0;
         if (!authUser.username) {
             setModifyingUser(true);
         } else {
-            setUsername(authUser.username);
+            setLocalUsername(authUser.username);
+            setValues += 1;
         }
         if (!authUser.gameSession) {
             setModifyingSession(true);
         } else {
-            setGameSession(authUser.gameSession);
+            setLocalGameSession(authUser.gameSession);
+            setValues += 1;
+        }
+        if (setValues === 2) {
+            setRedirect(true);
         }
     }, [authUser]);
 
     const onChangeInput = (ev) => {
-        const value = ev.target.value;
+        const value = ev.target.value.trim();
         switch (ev.target.id) {
             case 'username':
-                setUsername(value);
+                setLocalUsername(value);
                 break;
             case 'sessionId':
-                setGameSession(value);
+                setLocalGameSession(value);
                 break;
             default:
         }
     };
 
     const onSaveUsername = () => {
-        localStorage.setItem('user', username);
-        updateAuthUser({ username });
+        localStorage.setItem('user', localUsername);
+        updateAuthUser({ username: localUsername });
         setModifyingUser(false);
     }
 
     const onSaveGameSession = () => {
-        localStorage.setItem('gameSession', gameSession);
-        updateAuthUser({ gameSession });
+        localStorage.setItem('gameSession', localGameSession);
+        updateAuthUser({ gameSession: localGameSession });
         setModifyingSession(false);
     }
 
@@ -74,7 +85,7 @@ const HomePage = ({ authUser, updateAuthUser }) => {
             <>
                 <input
                     id="username"
-                    value={username}
+                    value={localUsername}
                     type="text"
                     placeholder="username"
                     onChange={ev => onChangeInput(ev)}
@@ -102,7 +113,7 @@ const HomePage = ({ authUser, updateAuthUser }) => {
             <>
                 <input
                     id="sessionId"
-                    value={gameSession}
+                    value={localGameSession}
                     type="text"
                     placeholder="session id"
                     onChange={ev => onChangeInput(ev)}
@@ -115,16 +126,25 @@ const HomePage = ({ authUser, updateAuthUser }) => {
             </>
         )
     }
+    let redirect = null;
+    if (shouldRedirect) {
+        redirect = <Redirect to={routes.GAME_SESSION(localGameSession)} />
+    }
     return (<div>
         Welcome,
         {userInput}!
         {sessionInput}
+        {redirect}
     </div>)
 };
 
 HomePage.propTypes = {
     authUser: PropTypes.shape({}),
-    updateAuthUser: PropTypes.func
+    updateAuthUser: PropTypes.func,
+    firebase: PropTypes.any,
 };
 
-export default withAuthentication(HomePage);
+export default compose(
+    withAuthentication,
+    withFirebase,
+)(HomePage);

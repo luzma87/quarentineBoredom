@@ -1,5 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPenFancy as fadPenFancy } from '@fortawesome/pro-duotone-svg-icons';
+import { faTireRugged as fadTireRugged } from '@fortawesome/pro-duotone-svg-icons';
 import { faPenFancy, faSave } from '@fortawesome/pro-regular-svg-icons';
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -10,7 +10,7 @@ import HomePage from '../home/HomePage';
 
 library.add(
   faPenFancy,
-  fadPenFancy,
+  fadTireRugged,
   faSave,
 );
 

@@ -46,12 +46,12 @@ class Firebase {
     });
   }
 
-  // *** user ***
-  game(uid) {
+  // *** gameSessions ***
+  gameSession(uid) {
     return this.db.collection('gameSessions').doc(uid);
   }
 
-  games() {
+  gameSessions() {
     return this.db.collection('gameSessions');
   }
 }
