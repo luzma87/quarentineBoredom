@@ -17,13 +17,16 @@ const ColumnsList = ({ columns, editable, onAdd, onDelete }) => {
 
     return (
         <div style={{ display: 'flex' }}>
-            Columns: <InputWithButton
-                id="column"
-                value={value}
-                onChange={(ev => onChange(ev))}
-                label="new column"
-                icon="save"
-                onClick={() => onSave()} />
+            Columns:
+            {editable
+                ? (<InputWithButton
+                    id="column"
+                    value={value}
+                    onChange={(ev => onChange(ev))}
+                    label="new column"
+                    icon="save"
+                    onClick={() => onSave()} />)
+                : null}
             {columns.map(column => (
                 <div key={column} style={{ padding: '0 4px' }}>
                     {column}

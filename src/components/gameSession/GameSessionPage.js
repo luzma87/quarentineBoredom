@@ -6,12 +6,11 @@ import routes from '../../constants/routes';
 import gameSessionsHooks from '../../hooks/gameSessionsHooks';
 import withFirebase from '../firebase/withFirebase';
 import withAuthentication from '../session/withAuthentication';
+import CustomIconButton from '../_common/CustomButton';
 import CustomSpinner from '../_common/CustomSpinner';
-import InputWithButton from '../_common/InputWithButton';
 import ColumnsList from './ColumnsList';
 import LettersList from './LettersList';
 import PlayersList from './PlayersList';
-import CustomIconButton from '../_common/CustomButton';
 
 const addPlayerToGameSession = (firebase, gameSession, username) => {
     const currentPlayers = gameSession.players || [];

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import propTypes from '../../constants/propTypes';
 import InputWithButton from '../_common/InputWithButton';
 import LabelWithButton from '../_common/LabelWithButton';
 
@@ -26,8 +25,6 @@ InputOrLabel.defaultProps = {
 
 InputOrLabel.propTypes = {
     flag: PropTypes.bool.isRequired,
-    icon: propTypes.icon.isRequired,
-    onClick: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,

@@ -20,7 +20,7 @@ library.add(
   fadAlienMonster,
 );
 
-function App() {
+const App = () => {
   return (
     <FirebaseContext.Provider value={new Firebase()}>
       <BrowserRouter>

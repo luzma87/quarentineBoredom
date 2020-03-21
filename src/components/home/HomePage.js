@@ -31,6 +31,10 @@ const HomePage = ({ authUser, updateAuthUser }) => {
         }
     }, [authUser]);
 
+    if (shouldRedirect) {
+        return <Redirect to={routes.GAME_SESSION(localGameSession)} />;
+    }
+
     const onChangeInput = (ev) => {
         const value = ev.target.value.trim();
         switch (ev.target.id) {
