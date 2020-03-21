@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const useGameSession = (firebase, gameSessionId) => {
     const [isLoading, setLoading] = useState(false);
-    const [gameSession, setGameSession] = useState([]);
+    const [gameSession, setGameSession] = useState(null);
     useEffect(() => {
         setLoading(true);
         const firebaseRef = (firebase.gameSession(gameSessionId)
