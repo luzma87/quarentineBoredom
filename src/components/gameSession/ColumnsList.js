@@ -7,12 +7,12 @@ const ColumnsList = ({ columns, editable, onAdd, onDelete }) => {
     const [value, setValue] = useState("");
 
     const onChange = (ev) => {
-        setValue(ev.target.value.trim());
+        setValue(ev.target.value);
     }
 
     const onSave = () => {
         setValue("");
-        onAdd(value);
+        onAdd(value.trim());
     }
 
     return (

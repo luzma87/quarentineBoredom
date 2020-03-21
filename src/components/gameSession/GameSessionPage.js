@@ -105,28 +105,12 @@ const GameSessionPage = ({ firebase, authUser }) => {
                 letters={letters}
                 onSave={(letter) => onSaveLetter(letter)} />
 
-            <table border="1" style={{ margin: '16px 0' }}>
-                <thead>
-                    <tr>
-                        <th></th>
-                        {columns.map((column) => (
-                            <th key={`c_${column}`}>{column}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {players.map((player) => (
-                        <tr key={`p_${player}`}>
-                            <td>{player}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            <CustomIconButton
-                icon={["fad", "alien-monster"]}
-                label="Start"
-                onClick={() => { }} />
+            {isHost
+                ? <CustomIconButton
+                    icon={["fad", "alien-monster"]}
+                    label="Start"
+                    onClick={() => { }} />
+                : null}
         </div>)
 };
 

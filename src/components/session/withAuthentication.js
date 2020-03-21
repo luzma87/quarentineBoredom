@@ -19,7 +19,7 @@ const withAuthentication = (Component) => {
           this.setState({ authUser });
         },
         () => {
-          this.setState({ authUser: null });
+          firebase.doSignInAnonymously();
         },
       );
     }
