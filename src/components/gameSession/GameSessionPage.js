@@ -53,7 +53,6 @@ const saveLetter = (firebase, gameSession, letter) => {
 
 const GameSessionPage = ({ firebase, authUser }) => {
     const [shouldRedirect, setRedirect] = useState(false);
-    const [letter, setLetter] = useState("");
 
     const { isLoading, gameSession } = gameSessionsHooks.useGameSession(firebase, authUser.gameSession);
 
@@ -84,13 +83,9 @@ const GameSessionPage = ({ firebase, authUser }) => {
         addPlayerToGameSession(firebase, gameSession, username);
     }
 
-    const onChangeLetter = (ev) => {
-        const letter = ev.target.value.trim();
-        setLetter(letter[letter.length - 1]);
-    }
+    const isHost = gameSession.host === username;
 
-    const onSaveLetter = () => {
-        setLetter("");
+    const onSaveLetter = (letter) => {
         saveLetter(firebase, gameSession, letter)
     }
 
@@ -99,22 +94,17 @@ const GameSessionPage = ({ firebase, authUser }) => {
             Loaded Game session
             <PlayersList
                 players={players}
+                editable={isHost}
                 onDelete={(player) => removePlayer(firebase, gameSession, player)} />
             <ColumnsList
                 columns={columns}
+                editable={isHost}
                 onAdd={(column) => addColumn(firebase, gameSession, column)}
                 onDelete={(column) => removeColumn(firebase, gameSession, column)} />
             <LettersList
-                letters={letters} />
-            <div>
-                <InputWithButton
-                    id="letter"
-                    value={letter}
-                    onChange={(ev => onChangeLetter(ev))}
-                    label="next letter"
-                    icon="save"
-                    onClick={() => onSaveLetter()} />
-            </div>
+                editable={isHost}
+                letters={letters}
+                onSave={(letter) => onSaveLetter(letter)} />
 
             <table border="1" style={{ margin: '16px 0' }}>
                 <thead>

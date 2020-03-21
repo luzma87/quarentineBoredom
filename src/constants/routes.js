@@ -1,7 +1,7 @@
 const routes = {
   HOME: '/',
 
-  GAME_SESSION: (gameSessionId = ":id") => `/game/${gameSessionId}`
+  GAME_SESSION: (gameSessionId = ":id") => `/gameSession/${gameSessionId}`
 };
 
 export default routes;

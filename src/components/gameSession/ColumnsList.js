@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CustomIconButton from '../_common/CustomButton';
 import InputWithButton from '../_common/InputWithButton';
 
-const ColumnsList = ({ columns, onAdd, onDelete }) => {
+const ColumnsList = ({ columns, editable, onAdd, onDelete }) => {
     const [value, setValue] = useState("");
 
     const onChange = (ev) => {
@@ -27,7 +27,9 @@ const ColumnsList = ({ columns, onAdd, onDelete }) => {
             {columns.map(column => (
                 <div key={column} style={{ padding: '0 4px' }}>
                     {column}
-                    <CustomIconButton icon="trash-alt" onClick={() => onDelete(column)} />
+                    {editable
+                        ? <CustomIconButton icon="trash-alt" onClick={() => onDelete(column)} />
+                        : null}
                 </div>
             ))}
         </div>
@@ -35,13 +37,15 @@ const ColumnsList = ({ columns, onAdd, onDelete }) => {
 }
 
 ColumnsList.defaultProps = {
-    columns: []
+    columns: [],
+    editable: false,
 }
 
 ColumnsList.propTypes = {
     columns: PropTypes.arrayOf(PropTypes.string),
     onAdd: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    editable: PropTypes.bool,
 }
 
 export default ColumnsList;
