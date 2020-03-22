@@ -1,26 +1,25 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import propTypes from '../../constants/propTypes';
-import CustomIconButton from './CustomButton';
-import CustomInput from './CustomInput';
+import PropTypes from "prop-types";
+import React from "react";
+import propTypes from "../../constants/propTypes";
+import CustomIconButton from "./CustomButton";
+import CustomInput from "./CustomInput";
 
-const InputWithButton = ({
-  id, value, onChange, label, icon, onClick,
-}) => (
+const InputWithButton = ({ id, value, onChange, label, icon, onClick }) => (
   <>
     <CustomInput
       id={id}
       value={value}
       label={label}
       onChange={onChange}
+      style={{ width: "400px" }}
     />
     <CustomIconButton icon={icon} onClick={onClick} />
   </>
 );
 
 InputWithButton.defaultProps = {
-  value: '',
-  label: '',
+  value: "",
+  label: ""
 };
 
 InputWithButton.propTypes = {
@@ -29,7 +28,7 @@ InputWithButton.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.string,
+  label: PropTypes.string
 };
 
 export default InputWithButton;

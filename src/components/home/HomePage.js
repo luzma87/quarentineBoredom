@@ -112,11 +112,11 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
             onModify={() => onClickChangeGameSession()}
           />
         </div>
-      </div>
-      <div className="row">
-        <button type="button" onClick={() => newGameSession()}>
-          Create new session
-        </button>
+        <div>
+          <button type="button" onClick={() => newGameSession()}>
+            Create new session
+          </button>
+        </div>
       </div>
     </div>
   );
