@@ -86,7 +86,7 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
   return (
     <div className="welcome">
       <div className="row">
-        <div>Nickname:</div>
+        <div className="label">Nickname:</div>
         <div>
           <InputOrLabel
             flag={modifyingUser}
@@ -100,7 +100,7 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
         </div>
       </div>
       <div className="row">
-        <div>Join a game:</div>
+        <div className="label">Join a game:</div>
         <div>
           <InputOrLabel
             flag={modifyingSession}
@@ -112,9 +112,9 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
             onModify={() => onClickChangeGameSession()}
           />
         </div>
-        <div>
+        <div style={{ marginLeft: "10px" }}>
           <button type="button" onClick={() => newGameSession()}>
-            Create new session
+            Create new game
           </button>
         </div>
       </div>

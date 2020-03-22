@@ -26,6 +26,7 @@ button {
   color: #eee;
   font-size: 18px;
   padding: 10px 15px;
+  border: none;
 }
 .welcome {
   padding: 5%;
