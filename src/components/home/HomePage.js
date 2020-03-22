@@ -1,3 +1,4 @@
+import { hri } from 'big-human-readable-ids';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -6,10 +7,17 @@ import propTypes from '../../constants/propTypes';
 import routes from '../../constants/routes';
 import withAuthentication from '../session/withAuthentication';
 import InputOrLabel from './InputOrLabel';
+import withFirebase from '../firebase/withFirebase';
 
-// sedative-dualist-ware-lonesomely-6035
+const newSession = (firebase, newId) => {
+    const newGameSession = {
+        id: newId,
+        date: new Date(),
+    };
+    firebase.gameSession(newId).set(newGameSession);
+};
 
-const HomePage = ({ authUser, updateAuthUser }) => {
+const HomePage = ({ firebase, authUser, updateAuthUser }) => {
     const [localUsername, setLocalUsername] = useState("");
     const [localGameSession, setLocalGameSession] = useState("");
     const [modifyingUser, setModifyingUser] = useState(false);
@@ -69,6 +77,12 @@ const HomePage = ({ authUser, updateAuthUser }) => {
         setModifyingSession(true);
     }
 
+    const newGameSession = () => {
+        const newId = hri.random();
+        setLocalGameSession(newId);
+        newSession(firebase, newId);
+    }
+
     const redirect = shouldRedirect
         ? (<Redirect to={routes.GAME_SESSION(localGameSession)} />)
         : null;
@@ -96,6 +110,9 @@ const HomePage = ({ authUser, updateAuthUser }) => {
                 onSave={() => onSaveGameSession()}
                 onModify={() => onClickChangeGameSession()}
             />
+            <button onClick={() => newGameSession()}>
+                Create new session
+            </button>
         </div>
         {redirect}
     </>)
@@ -104,8 +121,10 @@ const HomePage = ({ authUser, updateAuthUser }) => {
 HomePage.propTypes = {
     authUser: propTypes.authUser,
     updateAuthUser: PropTypes.func,
+    firebase: propTypes.firebase,
 };
 
 export default compose(
     withAuthentication,
+    withFirebase,
 )(HomePage);

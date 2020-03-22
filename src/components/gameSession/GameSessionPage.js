@@ -65,7 +65,7 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
 
     if (!gameSession) return <CustomSpinner shown={isLoading} />;
 
-    if (gameSession.currentGame.started) {
+    if (gameSession.currentGame && gameSession.currentGame.started) {
         const gameId = gameSession.currentGame.id;
         return <Redirect to={routes.GAME(gameSession.id, gameId)} />;
     }
@@ -119,6 +119,7 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
             started: true,
         };
         mergedGameSession.currentGame = game;
+        // console.log(mergedGameSession);
         firebase.gameSession(gameSession.id).set(mergedGameSession);
         localStorage.game = gameId;
         updateAuthUser({ game: gameId });
@@ -141,7 +142,9 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
                 editable={isHost}
                 letters={letters}
                 onSave={(letter) => onSaveLetter(letter)} />
-
+            <br />
+            Current letter: {gameSession.currentLetter}
+            <br />
             {isHost
                 ? <CustomIconButton
                     icon={["fad", "alien-monster"]}

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { compose } from 'recompose';
@@ -92,7 +91,9 @@ const ScorePage = ({ firebase, authUser }) => {
 
         newGameSession.gameHistory.push(currentGame);
         newGameSession.currentGame = {};
-        newGameSession.letters.push(newGameSession.currentLetter);
+        const newLetters = newGameSession.letters || [];
+        newLetters.push(newGameSession.currentLetter);
+        newGameSession.letters = newLetters;
         newGameSession.currentLetter = "";
 
         localStorage.removeItem('game');
