@@ -176,24 +176,27 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
         letters={letters}
         onSave={letter => onSaveLetter(letter)}
       />
-      <br />
-      Current letter: {gameSession.currentLetter}
-      <br />
-      {isHost ? (
-        <CustomIconButton
-          icon={["fad", "alien-monster"]}
-          label="Start"
-          onClick={() => onStartGame()}
-        />
-      ) : null}
-      <br />
-      {isHost ? (
-        <CustomIconButton
-          icon={["fad", "alien-monster"]}
-          label="Start new session"
-          onClick={() => onStartNewSession()}
-        />
-      ) : null}
+      <div style={{ margin: "16px 0", display: "flex" }}>
+        <div className="label">Current letter:</div>
+        {gameSession.currentLetter}
+      </div>
+      <div style={{ margin: "16px 0" }}>
+        {isHost ? (
+          <CustomIconButton
+            icon={["fad", "alien-monster"]}
+            label="Start"
+            onClick={() => onStartGame()}
+            style={{ marginRight: 16 }}
+          />
+        ) : null}
+        {isHost ? (
+          <CustomIconButton
+            icon={["fad", "alien-monster"]}
+            label="Start new session"
+            onClick={() => onStartNewSession()}
+          />
+        ) : null}
+      </div>
     </div>
   );
 };

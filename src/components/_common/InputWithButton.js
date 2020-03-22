@@ -5,7 +5,7 @@ import CustomIconButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 
 const InputWithButton = ({ id, value, onChange, label, icon, onClick }) => (
-  <>
+  <div>
     <CustomInput
       id={id}
       value={value}
@@ -14,7 +14,7 @@ const InputWithButton = ({ id, value, onChange, label, icon, onClick }) => (
       style={{ width: "400px" }}
     />
     <CustomIconButton icon={icon} onClick={onClick} />
-  </>
+  </div>
 );
 
 InputWithButton.defaultProps = {

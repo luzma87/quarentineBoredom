@@ -17,7 +17,13 @@ const LettersList = ({ letters, editable, onSave }) => {
 
   return (
     <>
-      <div style={{ display: "flex" }}>Letters: {letters.join(", ")}</div>
+      {letters.length > 0 ? (
+        <div style={{ display: "flex" }}>
+          <div className="label">Past letters:</div>
+          {letters.join(", ")}
+        </div>
+      ) : null}
+
       {editable ? (
         <InputWithButton
           id="letter"
