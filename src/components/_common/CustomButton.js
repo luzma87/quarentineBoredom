@@ -1,21 +1,17 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import CustomIcon from './CustomIcon';
-import propTypes from '../../constants/propTypes';
+import PropTypes from "prop-types";
+import React from "react";
+import CustomIcon from "./CustomIcon";
+import propTypes from "../../constants/propTypes";
 
 const CustomIconButton = ({ icon, label, onClick }) => {
   const marginLeft = label !== undefined ? 4 : 0;
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      style={{ background: 'hotpink' }}
-    >
+    <button type="button" onClick={onClick}>
       {label}
       <CustomIcon
         icon={icon}
         style={{
-          marginLeft,
+          marginLeft
         }}
       />
     </button>
@@ -23,13 +19,13 @@ const CustomIconButton = ({ icon, label, onClick }) => {
 };
 
 CustomIconButton.defaultProps = {
-  label: undefined,
+  label: undefined
 };
 
 CustomIconButton.propTypes = {
   icon: propTypes.icon.isRequired,
   label: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default CustomIconButton;

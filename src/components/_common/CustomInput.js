@@ -8,7 +8,6 @@ const CustomInput = ({ id, value, onChange, label, ...rest }) => (
     type="text"
     placeholder={label}
     onChange={ev => onChange(ev)}
-    style={{ background: "pink" }}
     // eslint-disable-next-line react/jsx-props-no-spreading
     {...rest}
   />
