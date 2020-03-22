@@ -1,15 +1,23 @@
+import { hri } from "big-human-readable-ids";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { compose } from "recompose";
 import propTypes from "../../constants/propTypes";
 import routes from "../../constants/routes";
+import withFirebase from "../firebase/withFirebase";
 import withAuthentication from "../session/withAuthentication";
 import InputOrLabel from "./InputOrLabel";
 
-// sedative-dualist-ware-lonesomely-6035
+const newSession = (firebase, id) => {
+  const newGameSession = {
+    id,
+    date: new Date()
+  };
+  firebase.gameSession(id).set(newGameSession);
+};
 
-const HomePage = ({ authUser, updateAuthUser }) => {
+const HomePage = ({ firebase, authUser, updateAuthUser }) => {
   const [localUsername, setLocalUsername] = useState("");
   const [localGameSession, setLocalGameSession] = useState("");
   const [modifyingUser, setModifyingUser] = useState(false);
@@ -69,6 +77,12 @@ const HomePage = ({ authUser, updateAuthUser }) => {
     setModifyingSession(true);
   };
 
+  const newGameSession = () => {
+    const newId = hri.random();
+    setLocalGameSession(newId);
+    newSession(firebase, newId);
+  };
+
   const redirect = shouldRedirect ? (
     <Redirect to={routes.GAME_SESSION(localGameSession)} />
   ) : null;
@@ -113,8 +127,9 @@ const HomePage = ({ authUser, updateAuthUser }) => {
 };
 
 HomePage.propTypes = {
-  authUser: propTypes.authUser,
-  updateAuthUser: PropTypes.func
+  authUser: propTypes.authUser.isRequired,
+  updateAuthUser: PropTypes.func.isRequired,
+  firebase: propTypes.firebase.isRequired
 };
 
-export default compose(withAuthentication)(HomePage);
+export default compose(withAuthentication, withFirebase)(HomePage);
