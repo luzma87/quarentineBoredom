@@ -109,7 +109,9 @@ const ScorePage = ({ firebase, authUser }) => {
     newGameSession.currentLetter = "";
 
     localStorage.removeItem("game");
-    firebase.gameSession(gameSession.id).set(newGameSession);
+    setTimeout(() => {
+      firebase.gameSession(gameSession.id).set(newGameSession);
+    }, 100);
   };
 
   return (

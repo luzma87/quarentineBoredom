@@ -32,7 +32,8 @@ const GamePage = ({ firebase, authUser }) => {
   }, [authUser, gameSession]);
 
   if (shouldRedirect) return <Redirect to={routes.HOME} />;
-  if (!gameSession || !myStuff) return <CustomSpinner shown={isLoading} />;
+  if (!gameSession || !gameSession.currentGame || !myStuff)
+    return <CustomSpinner shown={isLoading} />;
 
   const game = gameSession.currentGame;
   const playersArray = Object.values(game.players);
