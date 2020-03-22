@@ -4,15 +4,7 @@ import CustomIcon from "./CustomIcon";
 
 const CustomSpinner = ({ shown }) =>
   shown ? (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }}
-    >
+    <div className="full-screen">
       <CustomIcon icon={["fad", "bullseye-arrow"]} spin size="6x" />
     </div>
   ) : null;

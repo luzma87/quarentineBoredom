@@ -2,6 +2,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAlienMonster as fadAlienMonster,
   faBullseyeArrow as fadBullseyeArrow,
+  faGhost as fadGhost,
   faTireRugged as fadTireRugged
 } from "@fortawesome/pro-duotone-svg-icons";
 import {
@@ -26,7 +27,8 @@ library.add(
   faSave,
   faTrashAlt,
   fadAlienMonster,
-  fadBullseyeArrow
+  fadBullseyeArrow,
+  fadGhost
 );
 
 const App = () => (
