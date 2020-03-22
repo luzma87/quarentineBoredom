@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { compose } from "recompose";
+import propTypes from "../../constants/propTypes";
 import routes from "../../constants/routes";
 import gameSessionsHooks from "../../hooks/gameSessionsHooks";
 import withFirebase from "../firebase/withFirebase";
 import withAuthentication from "../session/withAuthentication";
+import ConditionalComponent from "../_common/ConditionalComponent";
 import CustomIconButton from "../_common/CustomButton";
 import CustomSpinner from "../_common/CustomSpinner";
 import ColumnsList from "./ColumnsList";
 import LettersList from "./LettersList";
 import PlayersList from "./PlayersList";
-import propTypes from "../../constants/propTypes";
 
 const addPlayerToGameSession = (firebase, gameSession, username, id) => {
   const currentPlayers = gameSession.players || [];
@@ -181,21 +182,21 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
         {gameSession.currentLetter}
       </div>
       <div style={{ margin: "16px 0" }}>
-        {isHost ? (
+        <ConditionalComponent visible={isHost}>
           <CustomIconButton
             icon={["fad", "alien-monster"]}
             label="Start"
             onClick={() => onStartGame()}
             style={{ marginRight: 16 }}
           />
-        ) : null}
-        {isHost ? (
+        </ConditionalComponent>
+        <ConditionalComponent visible={isHost}>
           <CustomIconButton
             icon={["fad", "alien-monster"]}
             label="Start new session"
             onClick={() => onStartNewSession()}
           />
-        ) : null}
+        </ConditionalComponent>
       </div>
     </div>
   );

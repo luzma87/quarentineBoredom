@@ -1,19 +1,20 @@
 import PropTypes from "prop-types";
 import React from "react";
-import CustomIconButton from "../_common/CustomButton";
 import propTypes from "../../constants/propTypes";
+import ConditionalComponent from "../_common/ConditionalComponent";
+import CustomIconButton from "../_common/CustomButton";
 
 const RemovablePlayer = ({ player, editable, onDelete }) => (
   <div className={`tag ${editable ? "with-button" : ""}`}>
     <div>{player.username}</div>
 
-    {editable ? (
+    <ConditionalComponent visible={editable}>
       <CustomIconButton
         style={{ marginLeft: 8 }}
         icon="trash-alt"
         onClick={() => onDelete(player)}
       />
-    ) : null}
+    </ConditionalComponent>
   </div>
 );
 

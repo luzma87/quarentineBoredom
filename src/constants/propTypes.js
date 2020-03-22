@@ -11,7 +11,11 @@ const propTypes = {
   }),
   authUser: PropTypes.shape({}),
   firebase: PropTypes.shape({}),
-  history: PropTypes.shape({})
+  history: PropTypes.shape({}),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
 };
 
 export default propTypes;

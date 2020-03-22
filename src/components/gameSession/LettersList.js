@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import ConditionalComponent from "../_common/ConditionalComponent";
 import InputWithButton from "../_common/InputWithButton";
 
 const LettersList = ({ letters, editable, onSave }) => {
@@ -17,14 +18,13 @@ const LettersList = ({ letters, editable, onSave }) => {
 
   return (
     <>
-      {letters.length > 0 ? (
+      <ConditionalComponent visible={letters.length > 0}>
         <div style={{ display: "flex" }}>
           <div className="label">Past letters:</div>
           {letters.join(", ")}
         </div>
-      ) : null}
-
-      {editable ? (
+      </ConditionalComponent>
+      <ConditionalComponent visible={editable}>
         <InputWithButton
           id="letter"
           value={letter}
@@ -33,7 +33,7 @@ const LettersList = ({ letters, editable, onSave }) => {
           icon="save"
           onClick={() => onSaveLetter()}
         />
-      ) : null}
+      </ConditionalComponent>
     </>
   );
 };
