@@ -1,6 +1,7 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAlienMonster as fadAlienMonster,
+  faBullseyeArrow as fadBullseyeArrow,
   faTireRugged as fadTireRugged
 } from "@fortawesome/pro-duotone-svg-icons";
 import {
@@ -19,7 +20,14 @@ import HomePage from "../home/HomePage";
 import ScorePage from "../score/ScorePage";
 import NotFound from "./NotFound";
 
-library.add(faPenFancy, fadTireRugged, faSave, faTrashAlt, fadAlienMonster);
+library.add(
+  faPenFancy,
+  fadTireRugged,
+  faSave,
+  faTrashAlt,
+  fadAlienMonster,
+  fadBullseyeArrow
+);
 
 const App = () => (
   <FirebaseContext.Provider value={new Firebase()}>
