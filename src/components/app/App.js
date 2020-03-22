@@ -6,6 +6,7 @@ import {
   faTireRugged as fadTireRugged
 } from "@fortawesome/pro-duotone-svg-icons";
 import {
+  faBackspace,
   faPenFancy,
   faSave,
   faTrashAlt
@@ -28,7 +29,8 @@ library.add(
   faTrashAlt,
   fadAlienMonster,
   fadBullseyeArrow,
-  fadGhost
+  fadGhost,
+  faBackspace
 );
 
 const App = () => (

@@ -1,31 +1,31 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import CustomIconButton from '../_common/CustomButton';
-import propTypes from '../../constants/propTypes';
+import PropTypes from "prop-types";
+import React from "react";
+import propTypes from "../../constants/propTypes";
+import RemovablePlayer from "./RemovablePlayer";
 
 const PlayersList = ({ players, editable, onDelete }) => (
-  <div style={{ display: 'flex' }}>
-    Players:
-    {players.map((player) => (
-      <div key={`pl_${player.id}`} style={{ padding: '0 4px' }}>
-        {player.username}
-        {editable
-          ? <CustomIconButton icon="trash-alt" onClick={() => onDelete(player)} />
-          : null}
-      </div>
+  <div style={{ display: "flex", alignItems: "center", margin: "16px 0" }}>
+    <div className="label">Players:</div>
+    {players.map(player => (
+      <RemovablePlayer
+        key={`player_${player.id}`}
+        player={player}
+        editable={editable}
+        onDelete={onDelete}
+      />
     ))}
   </div>
 );
 
 PlayersList.defaultProps = {
   players: [],
-  editable: false,
+  editable: false
 };
 
 PlayersList.propTypes = {
   players: PropTypes.arrayOf(propTypes.user),
   onDelete: PropTypes.func.isRequired,
-  editable: PropTypes.bool,
+  editable: PropTypes.bool
 };
 
 export default PlayersList;

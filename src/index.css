@@ -1,16 +1,22 @@
-body {
-  background: #e9e9e9;
-  width: 100%;
-  height: 100vh;
-  font-family: "Schoolbell", Verdana, Geneva, Tahoma, sans-serif;
-  color: rgb(86, 27, 141);
-  font-size: 16pt;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  --color-primary: #087fa3;
+  --color-secondary: rgb(86, 27, 141);
+  --color-contrast: rgb(236, 40, 177);
+  --color-bg: #e9e9e9;
+  --color-tag-bg: #f4e9fd;
+  --color-text-in-primary: #eee;
+}
+
+body {
+  background: var(--color-bg);
+  width: 100%;
+  height: 100vh;
+  font-family: "Schoolbell", Verdana, Geneva, Tahoma, sans-serif;
+  color: var(--color-secondary);
+  font-size: 16pt;
 }
 
 #root {
@@ -31,11 +37,19 @@ input::placeholder {
 
 button {
   height: 100%;
-  background: #087fa3;
-  color: #eee;
-  font-size: 18px;
+  background: var(--color-primary);
+  color: var(--color-text-in-primary);
+  font-size: 1.1em;
   padding: 10px 15px;
   border: none;
+  font-family: "Schoolbell", Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button.delete-tag {
+  font-size: 0.8em;
+  background: none;
+  padding: 4px;
+  color: var(--color-primary);
 }
 
 .welcome {
@@ -72,4 +86,55 @@ button {
   align-items: center;
   justify-content: center;
   font-family: "Lakki Reddy", cursive;
+}
+
+.label {
+  color: var(--color-contrast);
+  margin-right: 4px;
+}
+
+.tag {
+  background: var(--color-tag-bg);
+  padding: 0 4px;
+  border: solid 1px var(--color-primary);
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.tag.with-button {
+  padding-right: 0;
+}
+
+.columns-list {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.editable-colums-list {
+  display: flex;
+}
+
+.editable-colums-list form {
+  border: solid 1px var(--color-primary);
+}
+
+.editable-colums-list.filled form {
+  border-right: none;
+}
+
+.editable-colums-list input {
+  background: none;
+  border: none;
+  width: 100px;
+  background: var(--color-tag-bg);
+}
+
+.editable-colums-list .tag {
+  margin-right: 0;
+}
+
+.editable-colums-list .tag:not(:last-child) {
+  border-right: none;
 }

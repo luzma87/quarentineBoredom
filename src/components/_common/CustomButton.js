@@ -3,10 +3,10 @@ import React from "react";
 import CustomIcon from "./CustomIcon";
 import propTypes from "../../constants/propTypes";
 
-const CustomIconButton = ({ icon, label, onClick }) => {
+const CustomIconButton = ({ icon, label, style, onClick }) => {
   const marginLeft = label !== undefined ? 4 : 0;
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={onClick} style={style}>
       {label}
       <CustomIcon
         icon={icon}
@@ -19,12 +19,14 @@ const CustomIconButton = ({ icon, label, onClick }) => {
 };
 
 CustomIconButton.defaultProps = {
-  label: undefined
+  label: undefined,
+  style: {}
 };
 
 CustomIconButton.propTypes = {
   icon: propTypes.icon.isRequired,
   label: PropTypes.string,
+  style: PropTypes.shape({}),
   onClick: PropTypes.func.isRequired
 };
 

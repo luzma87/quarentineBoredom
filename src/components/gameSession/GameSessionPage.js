@@ -153,12 +153,13 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
   };
 
   return (
-    <div>
-      Hi {authUser.username}
-      <br />
-      Game session by {host.username}
-      <br />
-      Game session id <span>{gameSession.id}</span>
+    <div style={{ padding: "5%", display: "flex", flexDirection: "column" }}>
+      <div>Hi {authUser.username}</div>
+      <div>
+        {"Game session id "}
+        <span className="label">{gameSession.id}</span>
+        {`started by ${host.username}`}
+      </div>
       <PlayersList
         players={players}
         editable={isHost}
