@@ -19,7 +19,7 @@ const addPlayerToGameSession = (firebase, gameSession, username, id) => {
     const mergedPlayers = [...currentPlayers, { username, id }];
     const mergedGameSession = { ...gameSession, players: mergedPlayers };
     if (currentPlayers.length === 0) {
-        mergedGameSession.host = username;
+        mergedGameSession.host = { id, username };
     }
     firebase.gameSession(gameSession.id).set(mergedGameSession);
 };
@@ -52,6 +52,7 @@ const saveLetter = (firebase, gameSession, letter) => {
 
 const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
     const [shouldRedirect, setRedirect] = useState(false);
+    const [backToSession, setBackToSession] = useState(false);
 
     const { isLoading, gameSession } = gameSessionsHooks.useGameSession(firebase, authUser.gameSession);
 
@@ -69,12 +70,16 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
         const gameId = gameSession.currentGame.id;
         return <Redirect to={routes.GAME(gameSession.id, gameId)} />;
     }
+    if (backToSession) {
+        return <Redirect to={routes.HOME} />;
+    }
 
     const players = gameSession.players || [];
     const columns = gameSession.columns || [];
     const letters = gameSession.letters || [];
     const username = authUser.username;
     const userId = authUser.uid;
+    const host = gameSession.host || {};
 
     const isPlayerInGameSession = players.filter(p => p.username === username).length > 0;
 
@@ -82,11 +87,17 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
         addPlayerToGameSession(firebase, gameSession, username, userId);
     }
 
-    const isHost = gameSession.host === username;
+    const isHost = gameSession.host && gameSession.host.id === userId;
 
     const onSaveLetter = (letter) => {
         saveLetter(firebase, gameSession, letter)
     }
+
+    const onStartNewSession = () => {
+        localStorage.removeItem('gameSession');
+        setBackToSession(true);
+    };
+
     const onStartGame = () => {
         const gameId = hri.random();
         let letter = gameSession.currentLetter;
@@ -119,7 +130,6 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
             started: true,
         };
         mergedGameSession.currentGame = game;
-        // console.log(mergedGameSession);
         firebase.gameSession(gameSession.id).set(mergedGameSession);
         localStorage.game = gameId;
         updateAuthUser({ game: gameId });
@@ -128,7 +138,8 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
     return (
         <div>
             Hi {authUser.username}<br />
-            Game session by {gameSession.host}
+            Game session by {host.username}<br />
+            Game session id <span>{gameSession.id}</span>
             <PlayersList
                 players={players}
                 editable={isHost}
@@ -150,6 +161,13 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
                     icon={["fad", "alien-monster"]}
                     label="Start"
                     onClick={() => onStartGame()} />
+                : null}
+            <br />
+            {isHost
+                ? <CustomIconButton
+                    icon={["fad", "alien-monster"]}
+                    label="Start new session"
+                    onClick={() => onStartNewSession()} />
                 : null}
         </div>)
 };
