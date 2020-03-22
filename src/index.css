@@ -15,7 +15,7 @@ input {
   height: 100%;
   width: 100%;
   padding: 10px;
-  font-size: 20pt;
+  font-size: 14pt;
   color: #666;
 }
 input::placeholder {
@@ -26,29 +26,29 @@ button {
   background: #087fa3;
   color: #eee;
   font-size: 20px;
-  padding: 25px;
+  padding: 10px 15px;
   margin-left: -10px;
 }
 .welcome {
   padding: 5%;
   width: 100%;
   display: flex;
-  font-size: 38pt;
+  font-size: 20pt;
   flex-flow: row wrap;
   height: auto;
 }
 .row {
   width: 100%;
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .row div:first-child {
-  flex: 0.25;
+  flex: 0.15;
   display: flex;
   align-items: center;
 }
 .row div:nth-child(2) {
-  flex: 0.4;
+  flex: 0.3;
   display: flex;
   align-items: center;
 }

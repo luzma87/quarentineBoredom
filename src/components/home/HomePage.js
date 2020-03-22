@@ -109,7 +109,7 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
             flag={modifyingSession}
             id="sessionId"
             value={localGameSession}
-            label="session id"
+            label="Session id"
             onChange={ev => onChangeInput(ev)}
             onSave={() => onSaveGameSession()}
             onModify={() => onClickChangeGameSession()}
