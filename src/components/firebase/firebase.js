@@ -38,7 +38,7 @@ class Firebase {
           anonymous: authUser,
           username: localUser,
           gameSession: localGameSession,
-        }
+        };
         next(mergedUser);
       } else {
         fallback();

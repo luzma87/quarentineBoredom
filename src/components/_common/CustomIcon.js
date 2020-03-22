@@ -6,15 +6,13 @@ import propTypes from '../../constants/propTypes';
 const getIcon = (icon) => {
   if (Array.isArray(icon)) return icon;
   return ['far', icon];
-}
+};
 
 const CustomIcon = ({
   icon, ...rest
-}) => {
-  return (
-    <FontAwesomeIcon icon={getIcon(icon)} {...rest} />
-  );
-};
+}) => (
+  <FontAwesomeIcon icon={getIcon(icon)} {...rest} />
+);
 
 CustomIcon.propTypes = {
   icon: propTypes.icon.isRequired,

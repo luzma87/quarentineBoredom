@@ -4,20 +4,20 @@ import propTypes from '../../constants/propTypes';
 import CustomIconButton from './CustomButton';
 
 const LabelWithButton = ({ label, icon, onClick }) => (
-    <>
-        {label}
-        <CustomIconButton icon={icon} onClick={onClick} />
-    </>
+  <>
+    {label}
+    <CustomIconButton icon={icon} onClick={onClick} />
+  </>
 );
 
 LabelWithButton.defaultProps = {
-    label: "",
-}
+  label: '',
+};
 
 LabelWithButton.propTypes = {
-    icon: propTypes.icon.isRequired,
-    onClick: PropTypes.func.isRequired,
-    label: PropTypes.string,
-}
+  icon: propTypes.icon.isRequired,
+  onClick: PropTypes.func.isRequired,
+  label: PropTypes.string,
+};
 
 export default LabelWithButton;

@@ -1,26 +1,26 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import withFirebase from '../firebase/withFirebase';
-import AuthUserContext from './context';
+import React from "react";
+import propTypes from "../../constants/propTypes";
+import withFirebase from "../firebase/withFirebase";
+import AuthUserContext from "./context";
 
-const withAuthentication = (Component) => {
+const withAuthentication = Component => {
   class WithAuthentication extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        authUser: null,
+        authUser: null
       };
     }
 
     componentDidMount() {
       const { firebase } = this.props;
       this.listener = firebase.onAuthUserListener(
-        (authUser) => {
+        authUser => {
           this.setState({ authUser });
         },
         () => {
           firebase.doSignInAnonymously();
-        },
+        }
       );
     }
 
@@ -39,11 +39,12 @@ const withAuthentication = (Component) => {
       if (authUser) {
         return (
           <AuthUserContext.Provider value={authUser}>
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Component
               authUser={authUser}
-              updateAuthUser={(newAuthUser) => this.updateAuthUser(newAuthUser)}
-              {...this.props} />
+              updateAuthUser={newAuthUser => this.updateAuthUser(newAuthUser)}
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...this.props}
+            />
           </AuthUserContext.Provider>
         );
       }
@@ -52,7 +53,7 @@ const withAuthentication = (Component) => {
   }
 
   WithAuthentication.propTypes = {
-    firebase: PropTypes.any.isRequired,
+    firebase: propTypes.firebase.isRequired
   };
 
   return withFirebase(WithAuthentication);

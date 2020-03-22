@@ -1,16 +1,17 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const propTypes = {
-    icon: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.string)
-    ]),
-    user: PropTypes.shape({
-        username: PropTypes.string,
-        id: PropTypes.string,
-    }),
-    authUser: PropTypes.shape({}),
-    firebase: PropTypes.shape({}),
-}
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]),
+  user: PropTypes.shape({
+    username: PropTypes.string,
+    id: PropTypes.string
+  }),
+  authUser: PropTypes.shape({}),
+  firebase: PropTypes.shape({}),
+  history: PropTypes.shape({})
+};
 
 export default propTypes;
