@@ -67,9 +67,13 @@ const GameSessionPage = ({ firebase, authUser, updateAuthUser }) => {
     }
   }, [authUser]);
 
-  if (shouldRedirect) return <Redirect to={routes.HOME} />;
+  if (shouldRedirect) {
+    return <Redirect to={routes.HOME} />;
+  }
 
-  if (!gameSession) return <CustomSpinner shown={isLoading} />;
+  if (!gameSession) {
+    return <CustomSpinner shown={isLoading} />;
+  }
 
   if (gameSession.currentGame && gameSession.currentGame.started) {
     const gameId = gameSession.currentGame.id;

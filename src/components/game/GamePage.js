@@ -23,7 +23,7 @@ const GamePage = ({ firebase, authUser }) => {
     if (!authUser.username || !authUser.gameSession) {
       setRedirect(true);
     }
-    if (gameSession && authUser) {
+    if (gameSession && gameSession.currentGame && authUser) {
       setMyStuff(gameSession.currentGame.players[authUser.uid]);
       gameSession.currentGame.columns.forEach(() => {
         inputRefs.current.push(React.createRef());

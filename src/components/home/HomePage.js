@@ -83,9 +83,6 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
     newSession(firebase, newId);
   };
 
-  const redirect = shouldRedirect ? (
-    <Redirect to={routes.GAME_SESSION(localGameSession)} />
-  ) : null;
   return (
     <div className="welcome">
       <div className="row">
@@ -121,7 +118,6 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
           Create new session
         </button>
       </div>
-      {redirect}
     </div>
   );
 };
