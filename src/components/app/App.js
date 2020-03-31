@@ -14,6 +14,7 @@ import {
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import routes from "../../constants/routes";
+import D3DemoPage from "../d3/D3DemoPage";
 import FirebaseContext from "../firebase/context";
 import Firebase from "../firebase/firebase";
 import GamePage from "../game/GamePage";
@@ -42,6 +43,8 @@ const App = () => (
         <Route exact path={routes.SCORE()} component={ScorePage} />
         <Route exact path={routes.GAME()} component={GamePage} />
         <Route exact path={routes.GAME_SESSION()} component={GameSessionPage} />
+
+        <Route exact path={routes.D3} component={D3DemoPage} />
 
         <Route component={NotFound} />
       </Switch>

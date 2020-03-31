@@ -8,6 +8,7 @@ import routes from "../../constants/routes";
 import withFirebase from "../firebase/withFirebase";
 import withAuthentication from "../session/withAuthentication";
 import InputOrLabel from "./InputOrLabel";
+import Content from "../_common/Content";
 
 const newSession = (firebase, id) => {
   const newGameSession = {
@@ -84,7 +85,7 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
   };
 
   return (
-    <div className="welcome">
+    <Content className="welcome">
       <div className="row">
         <div className="label">Nickname:</div>
         <div>
@@ -118,7 +119,7 @@ const HomePage = ({ firebase, authUser, updateAuthUser }) => {
           </button>
         </div>
       </div>
-    </div>
+    </Content>
   );
 };
 

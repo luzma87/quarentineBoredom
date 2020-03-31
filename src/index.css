@@ -52,10 +52,13 @@ button.delete-tag {
   color: var(--color-primary);
 }
 
-.welcome {
+.content {
   padding: 5%;
-  width: 100%;
   display: flex;
+  flex-direction: column;
+}
+
+.welcome {
   font-size: 18pt;
   flex-flow: row wrap;
   height: auto;

@@ -7,6 +7,7 @@ import gameSessionsHooks from "../../hooks/gameSessionsHooks";
 import withFirebase from "../firebase/withFirebase";
 import withAuthentication from "../session/withAuthentication";
 import CustomSpinner from "../_common/CustomSpinner";
+import Content from "../_common/Content";
 
 const GamePage = ({ firebase, authUser }) => {
   const [shouldRedirect, setRedirect] = useState(false);
@@ -93,12 +94,8 @@ const GamePage = ({ firebase, authUser }) => {
   };
 
   return (
-    <div>
-      <hr />
-      <div>
-        Hey
-        {authUser.username}
-      </div>
+    <Content>
+      <div>{`Hey ${authUser.username}`}</div>
       <div>
         Current letter:
         {game.letter}
@@ -166,7 +163,7 @@ const GamePage = ({ firebase, authUser }) => {
           </tbody>
         </table>
       </div>
-    </div>
+    </Content>
   );
 };
 
