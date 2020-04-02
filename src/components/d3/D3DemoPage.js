@@ -3,7 +3,7 @@ import ChartWrapper from "./ChartWrapper";
 import GenderDropdown from "./GenderDropDown";
 
 const D3DemoPage = () => {
-  const [chosenGender, setChosenGender] = useState("female");
+  const [chosenGender, setChosenGender] = useState("women");
   return (
     <div>
       <div style={{ background: "slateblue", padding: 8, fontSize: "1.5em" }}>

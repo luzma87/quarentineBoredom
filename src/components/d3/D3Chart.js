@@ -53,6 +53,7 @@ export default class D3Chart {
 
   update(gender) {
     this.data = gender === "men" ? this.menData : this.womenData;
+    if (!this.data) return;
     const title = `The world's tallest ${gender}`;
     const y = d3
       .scaleLinear()

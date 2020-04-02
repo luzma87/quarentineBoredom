@@ -1,21 +1,23 @@
-import React, { Component } from "react";
+import PropTypes from "prop-types";
+import React, { useEffect, useRef, useState } from "react";
 import D3Chart from "./D3Chart";
 
-export default class ChartWrapper extends Component {
-  componentDidMount() {
-    this.setState({ chart: new D3Chart(this.refs.chart) });
-  }
+const ChartWrapper = ({ gender }) => {
+  const [chart, setChart] = useState(null);
+  const chartDiv = useRef(null);
+  useEffect(() => {
+    if (chartDiv.current) {
+      setChart(new D3Chart(chartDiv.current));
+    }
+  }, []);
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.state.chart.update(nextProps.gender);
-  }
+  if (chart) chart.update(gender);
 
-  shouldComponentUpdate() {
-    return false;
-  }
+  return <div ref={chartDiv} />;
+};
 
-  render() {
-    return <div ref="chart" />;
-  }
-}
+ChartWrapper.propTypes = {
+  gender: PropTypes.oneOf(["men", "women"]).isRequired
+};
+
+export default ChartWrapper;
