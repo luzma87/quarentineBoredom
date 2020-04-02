@@ -7,7 +7,8 @@ const routes = {
   SCORE: (gameSessionId = ":sessionId", gameId = ":id") =>
     `/gameSession/${gameSessionId}/${gameId}/score`,
 
-  D3: "/d3"
+  D3: "/d3",
+  D3_2: "/d3_2"
 };
 
 export default routes;

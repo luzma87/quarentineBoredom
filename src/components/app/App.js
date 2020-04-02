@@ -22,6 +22,7 @@ import GameSessionPage from "../gameSession/GameSessionPage";
 import HomePage from "../home/HomePage";
 import ScorePage from "../score/ScorePage";
 import NotFound from "./NotFound";
+import D3Demo2Page from "../d3-2/D3Demo2Page";
 
 library.add(
   faPenFancy,
@@ -45,6 +46,7 @@ const App = () => (
         <Route exact path={routes.GAME_SESSION()} component={GameSessionPage} />
 
         <Route exact path={routes.D3} component={D3DemoPage} />
+        <Route exact path={routes.D3_2} component={D3Demo2Page} />
 
         <Route component={NotFound} />
       </Switch>
