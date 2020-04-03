@@ -5,6 +5,7 @@ import Table from "./Table";
 
 const D3Demo2Page = () => {
   const [data, setData] = useState([]);
+  const [activeName, setActiveName] = useState(null);
 
   useEffect(() => {
     json("https://udemy-react-d3.firebaseio.com/children.json")
@@ -16,9 +17,9 @@ const D3Demo2Page = () => {
       });
   }, []);
 
-  const onUpdateData = newData => {
-    setData(newData);
-  };
+  const onUpdateData = newData => setData(newData);
+
+  const onUpdateName = newActiveName => setActiveName(newActiveName);
 
   return (
     <div>
@@ -39,11 +40,18 @@ const D3Demo2Page = () => {
           {!data || data.length === 0 ? (
             "No data :("
           ) : (
-            <ChartWrapper data={data} />
+            <ChartWrapper
+              data={data}
+              onUpdateName={newName => onUpdateName(newName)}
+            />
           )}
         </div>
         <div style={{ background: "hotpink" }}>
-          <Table data={data} onUpdateData={newData => onUpdateData(newData)} />
+          <Table
+            data={data}
+            activeName={activeName}
+            onUpdateData={newData => onUpdateData(newData)}
+          />
         </div>
       </div>
     </div>

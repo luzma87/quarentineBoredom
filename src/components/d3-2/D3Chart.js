@@ -6,7 +6,8 @@ const WIDTH = 500 - MARGIN.LEFT - MARGIN.LEFT;
 const HEIGHT = 300 - MARGIN.TOP - MARGIN.BOTTOM;
 
 export default class D3Chart {
-  constructor(element, data) {
+  constructor(element, data, onUpdateName) {
+    this.onUpdateName = onUpdateName;
     this.svg = d3
       .select(element)
       .append("svg")
@@ -74,6 +75,7 @@ export default class D3Chart {
       .attr("cx", d => this.x(d.age))
       .attr("r", 5)
       .attr("fill", "grey")
+      .on("click", d => this.onUpdateName(d.name))
       .transition(1000)
       .attr("cy", d => this.y(d.height));
   }

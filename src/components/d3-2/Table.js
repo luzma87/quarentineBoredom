@@ -7,7 +7,7 @@ const initFormData = {
   name: ""
 };
 
-const Table = ({ data, onUpdateData }) => {
+const Table = ({ data, activeName, onUpdateData }) => {
   const [formData, setFormData] = useState(initFormData);
 
   const onChange = ev => {
@@ -76,32 +76,43 @@ const Table = ({ data, onUpdateData }) => {
         <div>Height</div>
         <div>Age</div>
         <div>Remove</div>
-        {data.map(student => (
-          <React.Fragment
-            key={`${student.name}_${student.age}_${student.height}_fragment`}
-          >
-            <div>{student.name}</div>
-            <div>{student.height}</div>
-            <div>{student.age}</div>
-            <div>
-              <button
-                type="button"
-                name={student.name}
-                onClick={ev => onRemove(ev)}
-              >
-                Remove
-              </button>
-            </div>
-          </React.Fragment>
-        ))}
+        {data.map(student => {
+          const style =
+            activeName === student.name
+              ? { background: "grey" }
+              : { background: "#a1cea1" };
+          return (
+            <React.Fragment
+              key={`${student.name}_${student.age}_${student.height}_fragment`}
+            >
+              <div style={style}>{student.name}</div>
+              <div style={style}>{student.height}</div>
+              <div style={style}>{student.age}</div>
+              <div>
+                <button
+                  type="button"
+                  name={student.name}
+                  onClick={ev => onRemove(ev)}
+                >
+                  Remove
+                </button>
+              </div>
+            </React.Fragment>
+          );
+        })}
       </div>
     </div>
   );
 };
 
+Table.defaultProps = {
+  activeName: null
+};
+
 Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  onUpdateData: PropTypes.func.isRequired
+  onUpdateData: PropTypes.func.isRequired,
+  activeName: PropTypes.string
 };
 
 export default Table;
