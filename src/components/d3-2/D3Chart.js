@@ -7,7 +7,6 @@ const HEIGHT = 300 - MARGIN.TOP - MARGIN.BOTTOM;
 
 export default class D3Chart {
   constructor(element, data) {
-    this.data = data;
     this.svg = d3
       .select(element)
       .append("svg")
@@ -41,35 +40,41 @@ export default class D3Chart {
       .attr("text-anchor", "middle")
       .text("Height (cm)");
 
-    this.update();
+    this.update(data);
   }
 
-  update() {
+  update(data) {
+    this.data = data;
     this.x.domain([0, d3.max(this.data, d => Number(d.age))]);
     this.y.domain([0, d3.max(this.data, d => Number(d.height))]);
 
     const xAxisCall = d3.axisBottom(this.x);
     const yAxisCall = d3.axisLeft(this.y);
 
-    this.xAxisGroup.call(xAxisCall);
-    this.yAxisGroup.call(yAxisCall);
+    this.xAxisGroup.transition(1000).call(xAxisCall);
+    this.yAxisGroup.transition(1000).call(yAxisCall);
 
     // data join
     const circles = this.svg.selectAll("circle").data(this.data, d => d.name);
 
     // exit
-    circles.exit().remove();
+    circles.exit().transition(1000).attr("cy", this.y(0)).remove();
 
     // update
-    circles.attr("cx", d => this.x(d.age)).attr("cy", d => this.y(d.height));
+    circles
+      .transition(1000)
+      .attr("cx", d => this.x(d.age))
+      .attr("cy", d => this.y(d.height));
 
     // enter
     circles
       .enter()
       .append("circle")
+      .attr("cy", this.y(0))
       .attr("cx", d => this.x(d.age))
-      .attr("cy", d => this.y(d.height))
       .attr("r", 5)
-      .attr("fill", "grey");
+      .attr("fill", "grey")
+      .transition(1000)
+      .attr("cy", d => this.y(d.height));
   }
 }

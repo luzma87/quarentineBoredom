@@ -1,6 +1,7 @@
 import { json } from "d3";
 import React, { useEffect, useState } from "react";
 import ChartWrapper from "./ChartWrapper";
+import Table from "./Table";
 
 const D3Demo2Page = () => {
   const [data, setData] = useState([]);
@@ -14,6 +15,10 @@ const D3Demo2Page = () => {
         console.error(err);
       });
   }, []);
+
+  const onUpdateData = newData => {
+    setData(newData);
+  };
 
   return (
     <div>
@@ -31,9 +36,15 @@ const D3Demo2Page = () => {
       >
         <div style={{ background: "red" }}>
           Chart here
-          {data.length > 0 ? <ChartWrapper data={data} /> : "No data yet"}
+          {!data || data.length === 0 ? (
+            "No data :("
+          ) : (
+            <ChartWrapper data={data} />
+          )}
         </div>
-        <div style={{ background: "hotpink" }}>Table Here</div>
+        <div style={{ background: "hotpink" }}>
+          <Table data={data} onUpdateData={newData => onUpdateData(newData)} />
+        </div>
       </div>
     </div>
   );
