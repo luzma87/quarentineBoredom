@@ -25,6 +25,7 @@ const Table = ({ data, activeName, onUpdateData, onUpdateName }) => {
     ev.preventDefault();
     const newData = [...data, formData];
     onUpdateData(newData);
+    onUpdateName(formData.name);
     setFormData(initFormData);
   };
 
