@@ -9,17 +9,17 @@ const D3Demo2Page = () => {
 
   useEffect(() => {
     json("https://udemy-react-d3.firebaseio.com/children.json")
-      .then(res => {
+      .then((res) => {
         setData(res);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   }, []);
 
-  const onUpdateData = newData => setData(newData);
+  const onUpdateData = (newData) => setData(newData);
 
-  const onUpdateName = newActiveName => setActiveName(newActiveName);
+  const onUpdateName = (newActiveName) => setActiveName(newActiveName);
 
   return (
     <div>
@@ -28,31 +28,34 @@ const D3Demo2Page = () => {
       </div>
       <div
         style={{
-          background: "pink",
           display: "grid",
           gridTemplateColumns: "3fr 2fr",
           gridGap: 16,
-          padding: 16
+          padding: 16,
         }}
       >
-        <div style={{ background: "red" }}>
+        <div
+          style={{
+            border: "solid 2px #999",
+            padding: 8,
+            borderRadius: 8,
+          }}
+        >
           Chart here
           {!data || data.length === 0 ? (
             "No data :("
           ) : (
             <ChartWrapper
               data={data}
-              onUpdateName={newName => onUpdateName(newName)}
+              onUpdateName={(newName) => onUpdateName(newName)}
             />
           )}
         </div>
-        <div style={{ background: "hotpink" }}>
-          <Table
-            data={data}
-            activeName={activeName}
-            onUpdateData={newData => onUpdateData(newData)}
-          />
-        </div>
+        <Table
+          data={data}
+          activeName={activeName}
+          onUpdateData={(newData) => onUpdateData(newData)}
+        />
       </div>
     </div>
   );

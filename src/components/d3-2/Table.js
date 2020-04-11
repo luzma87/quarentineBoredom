@@ -4,46 +4,51 @@ import PropTypes from "prop-types";
 const initFormData = {
   age: "",
   height: "",
-  name: ""
+  name: "",
 };
 
 const Table = ({ data, activeName, onUpdateData }) => {
   const [formData, setFormData] = useState(initFormData);
 
-  const onChange = ev => {
+  const onChange = (ev) => {
     const newFormData = { ...formData, [ev.target.name]: ev.target.value };
     setFormData(newFormData);
   };
 
-  const onSubmit = ev => {
+  const onSubmit = (ev) => {
     ev.preventDefault();
     const newData = [...data, formData];
     onUpdateData(newData);
     setFormData(initFormData);
   };
 
-  const onRemove = ev => {
-    const newData = data.filter(s => s.name !== ev.target.name);
+  const onRemove = (ev) => {
+    const newData = data.filter((s) => s.name !== ev.target.name);
     onUpdateData(newData);
   };
 
   return (
-    <div style={{ background: "green" }}>
+    <div
+      style={{
+        border: "solid 2px #999",
+        borderRadius: 8,
+      }}
+    >
       <form
         style={{
           padding: 8,
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          gridRowGap: 4
+          gridRowGap: 4,
         }}
-        onSubmit={ev => onSubmit(ev)}
+        onSubmit={(ev) => onSubmit(ev)}
       >
         <input
           type="text"
           value={formData.name}
           placeholder="Name"
           name="name"
-          onChange={ev => onChange(ev)}
+          onChange={(ev) => onChange(ev)}
           style={{ width: 100 }}
         />
         <input
@@ -51,7 +56,7 @@ const Table = ({ data, activeName, onUpdateData }) => {
           value={formData.height}
           placeholder="Height"
           name="height"
-          onChange={ev => onChange(ev)}
+          onChange={(ev) => onChange(ev)}
           style={{ width: 100 }}
         />
         <input
@@ -59,7 +64,7 @@ const Table = ({ data, activeName, onUpdateData }) => {
           value={formData.age}
           placeholder="Age"
           name="age"
-          onChange={ev => onChange(ev)}
+          onChange={(ev) => onChange(ev)}
           style={{ width: 100 }}
         />
         <button type="submit">Add</button>
@@ -69,17 +74,17 @@ const Table = ({ data, activeName, onUpdateData }) => {
           padding: 8,
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          gridRowGap: 4
+          gridRowGap: 4,
         }}
       >
         <div>Name</div>
         <div>Height</div>
         <div>Age</div>
         <div>Remove</div>
-        {data.map(student => {
+        {data.map((student) => {
           const style =
             activeName === student.name
-              ? { background: "grey" }
+              ? { background: "lightgray" }
               : { background: "#a1cea1" };
           return (
             <React.Fragment
@@ -92,7 +97,7 @@ const Table = ({ data, activeName, onUpdateData }) => {
                 <button
                   type="button"
                   name={student.name}
-                  onClick={ev => onRemove(ev)}
+                  onClick={(ev) => onRemove(ev)}
                 >
                   Remove
                 </button>
@@ -106,13 +111,13 @@ const Table = ({ data, activeName, onUpdateData }) => {
 };
 
 Table.defaultProps = {
-  activeName: null
+  activeName: null,
 };
 
 Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onUpdateData: PropTypes.func.isRequired,
-  activeName: PropTypes.string
+  activeName: PropTypes.string,
 };
 
 export default Table;
