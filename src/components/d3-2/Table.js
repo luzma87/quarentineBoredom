@@ -27,6 +27,12 @@ const Table = ({ data, activeName, onUpdateData }) => {
     onUpdateData(newData);
   };
 
+  const styleCentered = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
   return (
     <div
       style={{
@@ -77,15 +83,16 @@ const Table = ({ data, activeName, onUpdateData }) => {
           gridRowGap: 4,
         }}
       >
-        <div>Name</div>
-        <div>Height</div>
-        <div>Age</div>
-        <div>Remove</div>
+        <div style={styleCentered}>Name</div>
+        <div style={styleCentered}>Height</div>
+        <div style={styleCentered}> Age</div>
+        <div style={styleCentered}>Remove</div>
         {data.map((student) => {
-          const style =
+          let style =
             activeName === student.name
               ? { background: "lightgray" }
               : { background: "#a1cea1" };
+          style = { ...style, ...styleCentered };
           return (
             <React.Fragment
               key={`${student.name}_${student.age}_${student.height}_fragment`}

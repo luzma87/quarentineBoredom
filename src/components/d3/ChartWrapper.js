@@ -17,7 +17,7 @@ const ChartWrapper = ({ gender }) => {
 };
 
 ChartWrapper.propTypes = {
-  gender: PropTypes.oneOf(["men", "women"]).isRequired
+  gender: PropTypes.oneOf(["men", "women"]).isRequired,
 };
 
 export default ChartWrapper;

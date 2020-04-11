@@ -47,6 +47,7 @@ const D3Demo2Page = () => {
           ) : (
             <ChartWrapper
               data={data}
+              activeName={activeName}
               onUpdateName={(newName) => onUpdateName(newName)}
             />
           )}

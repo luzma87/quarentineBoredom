@@ -8,13 +8,13 @@ export default class ChartWrapper extends Component {
         this.refs.chart,
         this.props.data,
         this.props.onUpdateName
-      )
+      ),
     });
   }
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
-    this.state.chart.update(nextProps.data);
+    this.state.chart.update(nextProps.data, nextProps.activeName);
   }
 
   shouldComponentUpdate() {
@@ -26,26 +26,42 @@ export default class ChartWrapper extends Component {
   }
 }
 
-// import PropTypes from "prop-types";
-// import React, { useEffect, useRef, useState } from "react";
-// import D3Chart from "./D3Chart";
-
-// const ChartWrapper = ({ gender }) => {
+// import React, { Component, memo, useEffect, useRef, useState } from "react";
+// const ChartWrapper = ({ data, onUpdateName, activeName }) => {
 //   const [chart, setChart] = useState(null);
 //   const chartDiv = useRef(null);
 //   useEffect(() => {
 //     if (chartDiv.current) {
-//       setChart(new D3Chart(chartDiv.current));
+//       setChart(new D3Chart(chartDiv.current, data, onUpdateName));
 //     }
-//   }, []);
+//   }, [data, onUpdateName]);
 
-//   if (chart) chart.update(gender);
+//   if (chart) chart.update(data, activeName);
 
 //   return <div ref={chartDiv} />;
 // };
 
-// ChartWrapper.propTypes = {
-//   gender: PropTypes.oneOf(["men", "women"]).isRequired
+// ChartWrapper.defaultProps = {
+//   activeName: "",
 // };
 
-// export default ChartWrapper;
+// ChartWrapper.propTypes = {
+//   data: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       age: PropTypes.string.isRequired,
+//       height: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//     })
+//   ).isRequired,
+//   onUpdateName: PropTypes.func.isRequired,
+//   activeName: PropTypes.string,
+// };
+
+// const areEqual = (prevProps, nextProps) => {
+//   console.log({ prevProps, nextProps });
+//   if (prevProps.data.length !== nextProps.data.length) return false;
+//   if (prevProps.activeName !== nextProps.activeName) return false;
+//   return true;
+// };
+
+// export default memo(ChartWrapper, areEqual);

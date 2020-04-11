@@ -44,19 +44,23 @@ export default class D3Chart {
     this.update(data);
   }
 
-  update(data) {
+  update(data, activeName) {
     this.data = data;
-    this.x.domain([0, d3.max(this.data, d => Number(d.age))]);
-    this.y.domain([0, d3.max(this.data, d => Number(d.height))]);
+    this.x.domain([0, d3.max(this.data, (d) => Number(d.age))]);
+    this.y.domain([0, d3.max(this.data, (d) => Number(d.height))]);
 
     const xAxisCall = d3.axisBottom(this.x);
     const yAxisCall = d3.axisLeft(this.y);
+    const activeColor = "lightgray";
+    const inactiveColor = "#A1CEA1";
+    const activeBorderColor = "darkgray";
+    const inactiveBorderColor = "#56a556";
 
     this.xAxisGroup.transition(1000).call(xAxisCall);
     this.yAxisGroup.transition(1000).call(yAxisCall);
 
     // data join
-    const circles = this.svg.selectAll("circle").data(this.data, d => d.name);
+    const circles = this.svg.selectAll("circle").data(this.data, (d) => d.name);
 
     // exit
     circles.exit().transition(1000).attr("cy", this.y(0)).remove();
@@ -64,19 +68,30 @@ export default class D3Chart {
     // update
     circles
       .transition(1000)
-      .attr("cx", d => this.x(d.age))
-      .attr("cy", d => this.y(d.height));
+      .attr("fill", (d) =>
+        d.name === activeName ? activeColor : inactiveColor
+      )
+      .attr("stroke", (d) =>
+        d.name === activeName ? activeBorderColor : inactiveBorderColor
+      )
+      .attr("cx", (d) => this.x(d.age))
+      .attr("cy", (d) => this.y(d.height));
 
     // enter
     circles
       .enter()
       .append("circle")
       .attr("cy", this.y(0))
-      .attr("cx", d => this.x(d.age))
+      .attr("cx", (d) => this.x(d.age))
       .attr("r", 5)
-      .attr("fill", "grey")
-      .on("click", d => this.onUpdateName(d.name))
+      .attr("stroke", (d) =>
+        d.name === activeName ? activeBorderColor : inactiveBorderColor
+      )
+      .attr("fill", (d) =>
+        d.name === activeName ? activeColor : inactiveColor
+      )
+      .on("click", (d) => this.onUpdateName(d.name))
       .transition(1000)
-      .attr("cy", d => this.y(d.height));
+      .attr("cy", (d) => this.y(d.height));
   }
 }
