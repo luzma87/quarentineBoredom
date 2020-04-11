@@ -55,6 +55,7 @@ const D3Demo2Page = () => {
         <Table
           data={data}
           activeName={activeName}
+          onUpdateName={(newName) => onUpdateName(newName)}
           onUpdateData={(newData) => onUpdateData(newData)}
         />
       </div>

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
@@ -7,12 +9,16 @@ const initFormData = {
   name: "",
 };
 
-const Table = ({ data, activeName, onUpdateData }) => {
+const Table = ({ data, activeName, onUpdateData, onUpdateName }) => {
   const [formData, setFormData] = useState(initFormData);
 
   const onChange = (ev) => {
     const newFormData = { ...formData, [ev.target.name]: ev.target.value };
     setFormData(newFormData);
+  };
+
+  const onClick = (name) => {
+    onUpdateName(name);
   };
 
   const onSubmit = (ev) => {
@@ -97,7 +103,9 @@ const Table = ({ data, activeName, onUpdateData }) => {
             <React.Fragment
               key={`${student.name}_${student.age}_${student.height}_fragment`}
             >
-              <div style={style}>{student.name}</div>
+              <div style={style} onClick={() => onClick(student.name)}>
+                {student.name}
+              </div>
               <div style={style}>{student.height}</div>
               <div style={style}>{student.age}</div>
               <div>
@@ -124,6 +132,7 @@ Table.defaultProps = {
 Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onUpdateData: PropTypes.func.isRequired,
+  onUpdateName: PropTypes.func.isRequired,
   activeName: PropTypes.string,
 };
 
