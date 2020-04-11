@@ -1,20 +1,28 @@
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import D3Chart from "./D3Chart";
 
 export default class ChartWrapper extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      chart: null,
+    };
+  }
+
   componentDidMount() {
+    const { data, onUpdateName } = this.props;
     this.setState({
-      chart: new D3Chart(
-        this.refs.chart,
-        this.props.data,
-        this.props.onUpdateName
-      ),
+      chart: new D3Chart(this.chart, data, onUpdateName),
     });
   }
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.state.chart.update(nextProps.data, nextProps.activeName);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { chart } = prevState;
+    if (chart) {
+      chart.update(nextProps.data, nextProps.activeName);
+    }
+    return null;
   }
 
   shouldComponentUpdate() {
@@ -22,7 +30,14 @@ export default class ChartWrapper extends Component {
   }
 
   render() {
-    return <div className="chart-area" ref="chart" />;
+    return (
+      <div
+        className="chart-area"
+        ref={(c) => {
+          this.chart = c;
+        }}
+      />
+    );
   }
 }
 
@@ -41,21 +56,21 @@ export default class ChartWrapper extends Component {
 //   return <div ref={chartDiv} />;
 // };
 
-// ChartWrapper.defaultProps = {
-//   activeName: "",
-// };
+ChartWrapper.defaultProps = {
+  activeName: "",
+};
 
-// ChartWrapper.propTypes = {
-//   data: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       age: PropTypes.string.isRequired,
-//       height: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-//   onUpdateName: PropTypes.func.isRequired,
-//   activeName: PropTypes.string,
-// };
+ChartWrapper.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      age: PropTypes.string.isRequired,
+      height: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onUpdateName: PropTypes.func.isRequired,
+  activeName: PropTypes.string,
+};
 
 // const areEqual = (prevProps, nextProps) => {
 //   console.log({ prevProps, nextProps });
